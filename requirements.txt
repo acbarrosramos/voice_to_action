@@ -1,0 +1,7 @@
+Flask
+twilio
+requests
+pydub
+SpeechRecognition
+python-dotenv
+
