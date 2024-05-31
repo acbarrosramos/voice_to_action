@@ -3,3 +3,5 @@ raw_data/
 tmpdir
 .env
 __pycache__/
+.ipynb_checkpoints/
+cv-corpus-17.0-2024-03-15-pt/
