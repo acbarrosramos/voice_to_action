@@ -76,9 +76,9 @@ def summarize_text_portuguese(input_text):
 
     return translated_summary
 
-# Example usage
-text = "O rápido coelho marrom saltou sobre o cão preguiçoso. Era uma manhã brilhante e ensolarada, e o coelho estava animado para começar o dia. Ele correu pelos campos verdes, sentindo o frescor da grama sob suas patas. O cão, por outro lado, estava deitado preguiçosamente à sombra de uma árvore, observando o coelho com indiferença. Enquanto o coelho continuava sua jornada, ele encontrou uma linda borboleta que dançava no ar. Fascinado, ele a seguiu por entre as flores coloridas, perdendo-se na beleza da natureza."
+# # Example usage
+# text = "O rápido coelho marrom saltou sobre o cão preguiçoso. Era uma manhã brilhante e ensolarada, e o coelho estava animado para começar o dia. Ele correu pelos campos verdes, sentindo o frescor da grama sob suas patas. O cão, por outro lado, estava deitado preguiçosamente à sombra de uma árvore, observando o coelho com indiferença. Enquanto o coelho continuava sua jornada, ele encontrou uma linda borboleta que dançava no ar. Fascinado, ele a seguiu por entre as flores coloridas, perdendo-se na beleza da natureza."
 
-# Summarize Portuguese text
-summary_portuguese = summarize_text_portuguese(text)
-print("Texto resumido em português:", summary_portuguese)
+# # Summarize Portuguese text
+# summary_portuguese = summarize_text_portuguese(text)
+# print("Texto resumido em português:", summary_portuguese)
