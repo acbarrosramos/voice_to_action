@@ -9,7 +9,7 @@ https://dashboard.ngrok.com/login
 pip install -r requirements.txt
 
 ##### 4. Para rodar a aplicação:
-python app.py
+python api.py
 
 ##### 5. Em um outro terminal digitar o comando:
 ngrok http 5000 (ou outra porta que o flask estiver rodando)
