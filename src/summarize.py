@@ -4,10 +4,10 @@ import torch
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from transformers import T5ForConditionalGeneration, T5Tokenizer, pipeline, MarianMTModel, MarianTokenizer
 
-# Define the device
+# Define o device
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# Load models and tokenizers
+# Carrega models e tokenizers
 model_name_pt_en = 'unicamp-dl/translation-pt-en-t5'
 tokenizer_pt_en = T5Tokenizer.from_pretrained(model_name_pt_en)
 model_pt_en = T5ForConditionalGeneration.from_pretrained(model_name_pt_en).to(device)
@@ -65,14 +65,14 @@ def summarize_text_portuguese(input_text):
         print('traduzindo en to pt',processing_time)
         return translated_texts, processing_time
 
-    # Translate Portuguese to English
+    # Traduz portugues para o inglês
     translated_text, pt_to_en_time = parallel_translate_pt_to_en([input_text])
     translated_text = translated_text[0]
 
-    # Summarize English text
+    # Sumariza o texto em inglês
     summary_text = summarize_text(translated_text)
 
-    # Translate English summary to Portuguese
+    # Traduz a sumarização para português
     translated_summary, en_to_pt_time = parallel_translate_en_to_pt([summary_text])
     translated_summary = translated_summary[0]
 
