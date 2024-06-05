@@ -4,4 +4,6 @@ requests
 pydub
 SpeechRecognition
 python-dotenv
-
+torch
+transformers
+sentencepiece

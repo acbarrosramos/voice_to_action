@@ -5,6 +5,15 @@
 
 https://dashboard.ngrok.com/login
 
+##### 2.1 Para Linux
+sudo apt update
+sudo apt install ffmpeg
+
+##### 2.2 Para windows
+https://ffmpeg.org/download.html
+
+
+
 ##### 3. Instalar as dependencias:
 pip install -r requirements.txt
 
@@ -32,3 +41,5 @@ ngrok http 5000 (ou outra porta que o flask estiver rodando)
 ![Alt text](/img/image-4.png)
 
 ##### 9. No celular enviar um audio para o Twilio e prosseguir com o teste:
+
+####
