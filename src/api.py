@@ -4,9 +4,9 @@ from flask import Flask, request
 from twilio.rest import Client
 import requests
 from requests.auth import HTTPBasicAuth
-from src.transcription import speech_to_text
-from src.summarize import summarize_text_portuguese
-from src.question_answer import question_answer
+from transcription import speech_to_text
+from summarize import summarize_text_portuguese
+from question_answer import question_answer
 from dotenv import load_dotenv
 import os
 import threading
@@ -54,7 +54,7 @@ def send_intermediate_message(from_number, to_number, subject):
     try:
         intermediate_message = client.messages.create(
             from_=from_number,
-            body=f"*_Parece que alguém mandou um podcast para você sobre \"{subject}\" 😂! Deseja resumir? Digite 1-Sim 2-Não_*",
+            body=f"Parece que alguém mandou um podcast para você sobre \"{subject}\" 😂! \nDeseja saber os pontos principais? \nDigite \n1-Sim \n2-Não",
             to=to_number
         )
         logging.debug(f"Intermediate message sent: {intermediate_message.sid}")
@@ -100,7 +100,7 @@ def webhook():
                 transcription = file.read()
 
             if body == '1':
-                summarized_text = summarize_text_portuguese(transcription)
+                summarized_text = summarize_text_portuguese()
                 send_final_message(ORIGIN_NUMBER, TO_NUMBER, summarized_text)
             elif body == '2':
                 send_final_message(ORIGIN_NUMBER, TO_NUMBER, transcription)
@@ -130,4 +130,4 @@ def process_audio_and_send_summary(media_url, from_number, to_number):
         logging.error(f"Error occurred during processing and sending summary: {e}", exc_info=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)

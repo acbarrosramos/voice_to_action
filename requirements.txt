@@ -4,6 +4,6 @@ requests
 pydub
 SpeechRecognition
 python-dotenv
-torch
+openai==0.28
 transformers
 sentencepiece
