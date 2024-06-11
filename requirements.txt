@@ -7,3 +7,4 @@ python-dotenv
 openai==0.28
 transformers
 sentencepiece
+tensorflow==2.16.1
