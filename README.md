@@ -18,7 +18,7 @@ https://ffmpeg.org/download.html
 docker build -t voice .
 ###### 3.2 exportando .env
 docker run -p 8000:8000 --env-file .env voice
-###### 3.4 subindo container:
+###### 3.4 subindo a aplicação sem dockerfile:
 python src/api.py
 
 ##### 4. Instalar as dependencias:

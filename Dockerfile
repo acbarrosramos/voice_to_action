@@ -15,4 +15,4 @@ COPY src /src
 COPY img /img
 COPY raw_data /raw_data
 
-CMD  python src/api.py
+CMD  python src/api.py --host 0.0.0.0 --port $PORT
