@@ -4,9 +4,9 @@ from flask import Flask, request
 from twilio.rest import Client
 import requests
 from requests.auth import HTTPBasicAuth
-from transcription import speech_to_text
-from summarize import summarize_text_portuguese
-from question_answer import question_answer
+from src.transcription import speech_to_text
+from src.summarize import summarize_text_portuguese
+from src.question_answer import question_answer
 from dotenv import load_dotenv
 import os
 import threading
@@ -20,8 +20,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
-ORIGIN_NUMBER = os.getenv('ORIGIN_NUMBER')
-TO_NUMBER = os.getenv('TO_NUMBER')
 
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
@@ -82,6 +80,12 @@ def webhook():
 
     try:
         body = request.form['Body'].strip().lower()
+        origin = request.form['From'].strip().lower()
+        logging.debug(f"Origin: {origin}")
+
+        receiver = request.form['To'].strip().lower()
+        logging.debug(f"ReceiverNumber: {receiver}")
+
         num_media = int(request.form.get('NumMedia', 0))
         logging.debug(f"NumMedia: {num_media}")
 
@@ -90,7 +94,7 @@ def webhook():
             logging.debug(f"Media URL: {media_url}")
 
             # Processa o audio e envia o audio em uma thread separada
-            threading.Thread(target=process_audio_and_send_summary, args=(media_url, ORIGIN_NUMBER, TO_NUMBER)).start()
+            threading.Thread(target=process_audio_and_send_summary, args=(media_url, receiver, origin)).start()
 
             return "OK", 200
 
@@ -101,12 +105,12 @@ def webhook():
 
             if body == '1':
                 summarized_text = summarize_text_portuguese()
-                send_final_message(ORIGIN_NUMBER, TO_NUMBER, summarized_text)
+                send_final_message(receiver, origin, summarized_text)
             elif body == '2':
-                send_final_message(ORIGIN_NUMBER, TO_NUMBER, transcription)
+                send_final_message(receiver, origin, transcription)
             else:
                 logging.warning("Invalid response from user")
-                send_final_message(ORIGIN_NUMBER, TO_NUMBER, "Resposta inválida. Por favor, digite 1 para resumir ou 2 para não resumir.")
+                send_final_message(receiver, origin, "Resposta inválida. Por favor, digite 1 para resumir ou 2 para não resumir.")
             return "OK", 200
 
         else:
@@ -115,6 +119,10 @@ def webhook():
     except Exception as e:
         logging.error(f"Error occurred in webhook: {e}", exc_info=True)
         return "Internal Server Error", 500
+
+@app.route('/')
+def index():
+    return "Hello, World!"
 
 def process_audio_and_send_summary(media_url, from_number, to_number):
     """Função para processar o áudio e enviar o resumo."""
@@ -130,4 +138,4 @@ def process_audio_and_send_summary(media_url, from_number, to_number):
         logging.error(f"Error occurred during processing and sending summary: {e}", exc_info=True)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8000, debug=True)
+ app.run(host="0.0.0.0", port=8080, debug=True)
